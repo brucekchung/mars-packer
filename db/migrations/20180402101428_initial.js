@@ -1,8 +1,21 @@
 
-exports.up = function(knex, Promise) {
-  
-};
+exports.up = (knex, Promise) => {
+ return Promise.all([
+   knex.schema.createTable('items', table => {
+      table.increments('id').primary()
+      table.string('item')
+      table.boolean('packed')
 
-exports.down = function(knex, Promise) {
+      table.timestamps(true, true)
+    }),
+  ])
+}
+
+
+exports.down = (knex, Promise) => {
+  return Promise.all([
+    knex.schema.dropTable('items')
+  ])
+}  
+
   
-};

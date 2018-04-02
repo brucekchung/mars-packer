@@ -1,7 +1,7 @@
 module.exports = {
   development: {
     client: 'pg',
-    connection: 'postgres://localhost/marsPicker',
+    connection: 'postgres://localhost/marspacker',
     migrations: {
       directory: './db/migrations'
     },
