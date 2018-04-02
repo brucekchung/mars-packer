@@ -37,3 +37,19 @@ app.get('/api/v1/items', (req, res) => {
       res.status(500).json({ err })
     })
 })
+
+app.delete('/api/v1/items', (req, res) => {
+  database('items').where('item', req.body.item).del()
+    .then(item => {
+      res.status(200)
+    })
+    .catch(err => {
+      res.status(500).json({ err })
+    })
+})
+
+app.patch('/api/v1/items', (req, res) => {
+
+})
+
+module.exports = app

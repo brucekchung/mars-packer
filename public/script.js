@@ -1,8 +1,29 @@
+$(document).ready(() => {
+  console.log('ready')
+  renderItems()
+})
+
+const addItem = item => {
+  $('.items').append(`
+    <div class="card">
+      <h3>${item}</h3>
+      <button class="delete">x</button>
+    </div>
+  `)
+}
+
+const renderItems = async () => {
+  const itemData = await fetch('/api/v1/items')
+  const allItems = await itemData.json()
+
+  allItems.forEach(item => addItem(item.item))
+}
+
+
 $('.submit-item').on('click', () => {
   const item = $('input').val()
 
-  $('.items').append(`<h3>${item}</h3>`)
-  //need to add delete button and checked box
+  addItem(item)
 
   fetch('/api/v1/items', {
     method: 'POST',
@@ -14,3 +35,14 @@ $('.submit-item').on('click', () => {
 })
 
 //need to add onload render func
+$('.items').on('click', '.delete', (e) => {
+  const name = $(e.target).closest('.card').find('h3').text() 
+  console.log('name:', name)
+
+  fetch('/api/v1/items', {
+    method: 'DELETE', 
+    body: JSON.stringify({ name }),
+    headers: {'Content-Type': 'application/json'}
+  })
+})
+
