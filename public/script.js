@@ -8,6 +8,8 @@ const addItem = item => {
     <div class="card">
       <h3>${item}</h3>
       <button class="delete">x</button>
+      <h4>Packed: </h4>
+      <input class="pack-status" type="checkbox" />
     </div>
   `)
 }
@@ -19,9 +21,16 @@ const renderItems = async () => {
   allItems.forEach(item => addItem(item.item))
 }
 
+$('.items').on('click', '.pack-status', () => {
+  fetch('/api/v1/items', {
+    method: 'PATCH',
+    body: JSON.stringify({ item, packed }),
+    headers: {'Content-Type': 'application/json'}
+  })
+})
 
 $('.submit-item').on('click', () => {
-  const item = $('input').val()
+  const item = $('.item-entry').val()
 
   addItem(item)
 
@@ -31,7 +40,7 @@ $('.submit-item').on('click', () => {
     headers: {'Content-Type': 'application/json'}
   })
   
-  $('input').val('')
+  $('.item-entry').val('')
 })
 
 $('.items').on('click', '.delete', (e) => {
