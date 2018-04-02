@@ -8,7 +8,8 @@ const server = require('../server')
 const environment = 'test'
 const configuration = require('../knexfile')[environment]
 const database = require('knex')(configuration)
-
+console.log('config: ', configuration)
+console.log('db: ', database)
 chai.use(chaiHttp)
 
 describe('API Routes', () => {
