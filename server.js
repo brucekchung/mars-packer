@@ -49,7 +49,18 @@ app.delete('/api/v1/items', (req, res) => {
 })
 
 app.patch('/api/v1/items', (req, res) => {
-
+  database('items').where('packed', req.body.item)
+    .update({
+      packed: req.body.packed
+    })
+    .then(item => {
+      if (item) {
+        res.status(202).send('edited')
+      } else {
+        res.status(404).send('failed to edit')
+      }
+    })
+    .catch(err => res.status(500).json({ err }))
 })
 
 module.exports = app
