@@ -34,15 +34,16 @@ $('.submit-item').on('click', () => {
   $('input').val('')
 })
 
-//need to add onload render func
 $('.items').on('click', '.delete', (e) => {
-  const name = $(e.target).closest('.card').find('h3').text() 
-  console.log('name:', name)
+  const item = $(e.target).closest('.card').find('h3').text() 
+  console.log('item:', item)
 
   fetch('/api/v1/items', {
     method: 'DELETE', 
-    body: JSON.stringify({ name }),
+    body: JSON.stringify({ item }),
     headers: {'Content-Type': 'application/json'}
   })
+
+  $(e.target).closest('.card').remove()
 })
 
