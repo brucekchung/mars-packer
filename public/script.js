@@ -3,23 +3,27 @@ $(document).ready(() => {
   renderItems()
 })
 
-const renderItems = async () => {
-  const allItems = await fetch('/api/v1/items')
-
-  console.log('items: ', await allItems.json())
-}
-
-
-$('.submit-item').on('click', () => {
-  const item = $('input').val()
-
+const addItem = item => {
   $('.items').append(`
     <div class="card">
       <h3>${item}</h3>
       <button class="delete">x</button>
     </div>
   `)
-  //need to add delete button and checked box
+}
+
+const renderItems = async () => {
+  const itemData = await fetch('/api/v1/items')
+  const allItems = await itemData.json()
+
+  allItems.forEach(item => addItem(item.item))
+}
+
+
+$('.submit-item').on('click', () => {
+  const item = $('input').val()
+
+  addItem(item)
 
   fetch('/api/v1/items', {
     method: 'POST',
