@@ -26,7 +26,7 @@ describe('API Routes', () => {
     })
   })
 
-  describe('/api/v1/items', () => {
+  describe('GET /api/v1/items', () => {
     it('should have a GET route for items', () => {
       return chai.request(server)
       .get('/api/v1/items')
@@ -40,9 +40,27 @@ describe('API Routes', () => {
         throw error
       })
     })
+  })
 
+  describe('POST /api/v1/items', () => {
     it('should have a POST route for items', () => {
+      return chai.request(server)
+        .post('/api/v1/items')
+        .send({
+          item: 'toothpaste',
+          packed: false
+        })
+        .then(res => {
+          res.should.have.status(201)
+          res.should.be.json
+          res.body.should.be.a('object')
 
+          res.body.should.have.property('id')
+          res.body.id.should.be.a('number')
+        })
+        .catch(err => {
+          throw err
+        })
     })
   })
 })
