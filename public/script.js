@@ -9,7 +9,7 @@ const addItem = item => {
       <h3>${item}</h3>
       <button class="delete">x</button>
       <h4>Packed: </h4>
-      <input class="pack-status" type="checkbox" />
+      <input class="pack-status" checked type="checkbox" />
     </div>
   `)
 }
@@ -21,7 +21,14 @@ const renderItems = async () => {
   allItems.forEach(item => addItem(item.item))
 }
 
-$('.items').on('click', '.pack-status', () => {
+$('.items').on('click', '.pack-status', (e) => {
+  let packed
+
+  //const thing = $(e.target).attr('checked', !checkBoxes.attr("checked"))
+  //console.log('thing', thing)
+  //const item = $(e.target).closest('.card').find('h3').text()
+  //console.log('item: ', item)
+
   fetch('/api/v1/items', {
     method: 'PATCH',
     body: JSON.stringify({ item, packed }),
