@@ -1,7 +1,8 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
-const environment = process.node_ENV || 'development'
+
+const environment = process.env.NODE_ENV || 'development'
 const configuration = require('./knexfile')[environment]
 const database = require('knex')(configuration)
 
@@ -38,18 +39,20 @@ app.get('/api/v1/items', (req, res) => {
     })
 })
 
-app.delete('/api/v1/items', (req, res) => {
-  database('items').where('item', req.body.item).del()
+app.delete('/api/v1/items/:id', (req, res) => {
+  database('items').where('id', req.params.id)
+    .select()
+    .del()
     .then(item => {
-      res.status(200)
+      res.status(200).send('deleted')
     })
     .catch(err => {
       res.status(500).json({ err })
     })
 })
 
-app.patch('/api/v1/items', (req, res) => {
-  database('items').where('packed', req.body.item)
+app.patch('/api/v1/items/:id', (req, res) => {
+  database('items').where('packed', req.params.id)
     .update({
       packed: req.body.packed
     })
