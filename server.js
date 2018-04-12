@@ -39,8 +39,8 @@ app.get('/api/v1/items', (req, res) => {
     })
 })
 
-app.delete('/api/v1/items', (req, res) => {
-  database('items').where('item', req.body.item).del()
+app.delete('/api/v1/items/:id', (req, res) => {
+  database('items').where('id', req.params.id).del()
     .then(item => {
       res.status(200)
     })
@@ -49,8 +49,8 @@ app.delete('/api/v1/items', (req, res) => {
     })
 })
 
-app.patch('/api/v1/items', (req, res) => {
-  database('items').where('packed', req.body.item)
+app.patch('/api/v1/items/:id', (req, res) => {
+  database('items').where('packed', req.params.id)
     .update({
       packed: req.body.packed
     })
