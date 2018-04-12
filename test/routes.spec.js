@@ -85,7 +85,7 @@ describe('API Routes', () => {
   describe('DELETE /api/v1/items', () => {
     it('should have a DELETE route for items', () => {
       return chai.request(server)
-      .delete('/api/v1/items/1')
+      .delete('/api/v1/items/bag')
       .then(res => {
         res.should.have.status(200)
         res.text.should.equal('deleted')
@@ -97,10 +97,9 @@ describe('API Routes', () => {
 
     it('should return an error if an id to delete does not exist', () => {
       return chai.request(server)
-        .delete('/api/v1/items/99sdf9')
+        .delete('/api/v1/items/')
         .then(res => {
-          res.should.have.status(500)
-          res.should.be.json
+          res.should.have.status(404)
           res.body.should.be.a('object')
         })
         .catch(err => {
