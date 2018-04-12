@@ -108,6 +108,32 @@ describe('API Routes', () => {
     })
   })
 
+  describe('PATCH /api/v1/items', () => { 
+    it('should have a PATCH route for items', () => {
+      return chai.request(server)
+      .patch('/api/v1/items/bag')
+      .send({
+         packed: true
+      })
+      .then(res => {
+        res.should.have.status(202)
+        res.text.should.equal('edited')
+      })
+      .catch(err => {
+        throw err
+      })
+    })
 
+    it('should return an error if an item to delete does not exist', () => {
+      return chai.request(server)
+        .patch('/api/v1/items/randoimstuff999')
+        .then(res => {
+          res.should.have.status(500)
+        })
+        .catch(err => {
+          throw err
+        })
+    }) 
+  })
 })
 
