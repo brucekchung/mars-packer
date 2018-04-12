@@ -63,6 +63,23 @@ describe('API Routes', () => {
           throw err
         })
     })
+
+    it('should return an error if the item parameter is missing', () => {
+      return chai.request(server)
+        .post('/api/v1/items')
+        .send({
+          // item: 'toothpaste',
+          packed: false
+        })
+        .then(res => {
+          res.should.have.status(422)
+          res.should.be.json
+          res.body.should.be.a('object')
+        })
+        .catch(err => {
+          throw err
+        })
+    })
   })
 })
 
