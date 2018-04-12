@@ -21,20 +21,6 @@ const renderItems = async () => {
   allItems.forEach(item => addItem(item.item))
 }
 
-$('.items').on('click', '.pack-status', (e) => {
-  let packed
-
-  //const thing = $(e.target).attr('checked', !checkBoxes.attr("checked"))
-  //console.log('thing', thing)
-  //const item = $(e.target).closest('.card').find('h3').text()
-  //console.log('item: ', item)
-
-  fetch('/api/v1/items', {
-    method: 'PATCH',
-    body: JSON.stringify({ item, packed }),
-    headers: {'Content-Type': 'application/json'}
-  })
-})
 
 $('.submit-item').on('click', () => {
   const item = $('.item-entry').val()
@@ -50,7 +36,8 @@ $('.submit-item').on('click', () => {
   $('.item-entry').val('')
 })
 
-$('.items').on('click', '.delete', async(e) => {
+
+$('.items').on('click', '.delete', (e) => {
   const name = $(e.target).closest('.card').find('h3').text() 
 
   fetch(`/api/v1/items/${name}`, {
@@ -61,4 +48,18 @@ $('.items').on('click', '.delete', async(e) => {
 
   $(e.target).closest('.card').remove()
 })
+
+
+$('.items').on('click', '.pack-status', (e) => {
+  const name = $(e.target).closest('.card').find('h3').text() 
+  const status = $(e.target).prop('checked')
+  console.log('status: ', status)
+
+  fetch(`/api/v1/items/${name}`, {
+    method: 'PATCH', 
+    body: JSON.stringify({ packed: status }),
+    headers: {'Content-Type': 'application/json'}
+  })
+})
+
 

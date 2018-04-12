@@ -51,8 +51,8 @@ app.delete('/api/v1/items/:item', (req, res) => {
     })
 })
 
-app.patch('/api/v1/items/:id', (req, res) => {
-  database('items').where('packed', req.params.id)
+app.patch('/api/v1/items/:item', (req, res) => {
+  database('items').where('item', req.params.item)
     .update({
       packed: req.body.packed
     })
