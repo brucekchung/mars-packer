@@ -39,8 +39,8 @@ app.get('/api/v1/items', (req, res) => {
     })
 })
 
-app.delete('/api/v1/items/:id', (req, res) => {
-  database('items').where('id', req.params.id)
+app.delete('/api/v1/items/:item', (req, res) => {
+  database('items').where('item', req.params.item)
     .select()
     .del()
     .then(item => {

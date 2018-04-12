@@ -50,13 +50,12 @@ $('.submit-item').on('click', () => {
   $('.item-entry').val('')
 })
 
-$('.items').on('click', '.delete', (e) => {
-  const item = $(e.target).closest('.card').find('h3').text() 
-  console.log('item:', item)
+$('.items').on('click', '.delete', async(e) => {
+  const name = $(e.target).closest('.card').find('h3').text() 
 
-  fetch('/api/v1/items', {
+  fetch(`/api/v1/items/${name}`, {
     method: 'DELETE', 
-    body: JSON.stringify({ item }),
+    body: JSON.stringify({ item: name }),
     headers: {'Content-Type': 'application/json'}
   })
 
