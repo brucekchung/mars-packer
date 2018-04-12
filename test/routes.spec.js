@@ -81,5 +81,34 @@ describe('API Routes', () => {
         })
     })
   })
+
+  describe('DELETE /api/v1/items', () => {
+    it('should have a DELETE route for items', () => {
+      return chai.request(server)
+      .delete('/api/v1/items/1')
+      .then(res => {
+        res.should.have.status(200)
+        res.text.should.equal('deleted')
+      })
+      .catch(err => {
+        throw err
+      })
+    })
+
+    it('should return an error if an id to delete does not exist', () => {
+      return chai.request(server)
+        .delete('/api/v1/items/99sdf9')
+        .then(res => {
+          res.should.have.status(500)
+          res.should.be.json
+          res.body.should.be.a('object')
+        })
+        .catch(err => {
+          throw err
+        })
+    })
+  })
+
+
 })
 
