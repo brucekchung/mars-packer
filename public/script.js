@@ -19,6 +19,7 @@ const renderItems = async () => {
   const allItems = await itemData.json()
 
   allItems.forEach(item => addItem(item.item))
+  //need to pass checked status through addItem
 }
 
 
@@ -52,7 +53,7 @@ $('.items').on('click', '.delete', (e) => {
 
 $('.items').on('click', '.pack-status', (e) => {
   const name = $(e.target).closest('.card').find('h3').text() 
-  const status = $(e.target).prop('checked')
+  const status = !$(e.target).prop('checked')
   console.log('status: ', status)
 
   fetch(`/api/v1/items/${name}`, {
